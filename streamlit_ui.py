@@ -1,7 +1,9 @@
 """Streamlit UI for upload, grounded facts, evidence, relationships, and review."""
 from __future__ import annotations
 
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 import pandas as pd
@@ -24,7 +26,7 @@ page = st.sidebar.radio("Navigate", ["Upload / Process", "Facts", "Evidence", "R
 if page == "Upload / Process":
     uploads = st.file_uploader("Choose one or more PDFs", type=["pdf"], accept_multiple_files=True)
     if uploads and st.button("Process PDFs", type="primary"):
-        upload_dir = ROOT / "data" / "uploads"; upload_dir.mkdir(parents=True, exist_ok=True)
+        upload_dir = Path(os.getenv("FACT_LAYER_UPLOAD_DIR", Path(tempfile.gettempdir()) / "fact-layer-uploads")); upload_dir.mkdir(parents=True, exist_ok=True)
         for uploaded in uploads:
             safe_path = upload_dir / Path(uploaded.name).name
             safe_path.write_bytes(uploaded.getvalue())
@@ -72,3 +74,4 @@ else:
     if review:
         st.dataframe(pd.DataFrame([{"Subject": f.subject, "Predicate": f.predicate, "Value": f.value, "Confidence": f.confidence, "Notes": f.extraction_notes, "Document": f.source_document, "Page": f.source_page, "Evidence": f.evidence} for f in review]), use_container_width=True, hide_index=True)
     else: st.success("No low-confidence facts are currently flagged.")
+
