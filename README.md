@@ -109,9 +109,7 @@ superjoin-fact-knowledge-layer/
 
 The application uses Groq for structured fact extraction and ambiguous relationship classification. This repository was created with AI-assisted engineering; deterministic validation, grounding, normalization, and tests are included so model output is not blindly trusted.
 
-## Demo video
 
-Demo Video: [ADD LINK]
 
 ## Git commands
 
