@@ -1,0 +1,12 @@
+.venv/
+.pytest_cache/
+.pytest-tmp/
+__pycache__/
+tests/
+docs/
+work/
+data/sample/
+data/uploads/
+*.pdf
+*.db
+.env
